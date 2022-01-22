@@ -1,1 +1,2 @@
-warriorMermaidGameApp.init()
+window.onload = () => warriorMermaidGameApp.init()
+
