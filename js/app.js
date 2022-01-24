@@ -11,8 +11,9 @@ const warriorMermaidGameApp = {
   backgroundImage: undefined,
   player: undefined,
   obstacles: [],
-  bullets: [],
   lives: [],
+  bullets: [],
+
 
   keys: {
     UP: 38,
@@ -23,6 +24,8 @@ const warriorMermaidGameApp = {
   },
 
   obstaclesImages: ["alga.png", "alga2.png", "alga3.png"],
+
+  livesImages: ["beluga.png", "whale.png", "whale2.png"],
 
   init() {
     this.setContext();
@@ -55,6 +58,7 @@ const warriorMermaidGameApp = {
       }
       this.clear();
       this.generateObstacles();
+      this.generateLives();
       this.drawAll();
     }, 1000 / this.FPS);
   },
@@ -63,12 +67,14 @@ const warriorMermaidGameApp = {
     this.player = new Player(this.ctx, this.gameSize, this.keys);
     this.background = new Background(this.ctx, this.gameSize);
     this.obstacles = [];
+    this.lives = [];
   },
 
   drawAll() {
     this.background.draw();
     this.player.draw(this.framesCounter);
     this.obstacles.forEach((obs) => obs.draw());
+    this.lives.forEach((liv) => liv.draw());
   },
 
   generateObstacles() {
@@ -80,6 +86,16 @@ const warriorMermaidGameApp = {
       );
     }
   },
+
+  generateLives() {
+    if (this.framesCounter % 100 === 0) {
+      this.lives.push(
+        new Live(this.ctx, this.gameSize, 100, this.livesImages)
+      );
+    }
+  },
+
+
 
   clear() {
     this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h);
