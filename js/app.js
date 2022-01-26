@@ -201,7 +201,7 @@ const warriorMermaidGameApp = {
           bull.posY < obs.obstaclePos.y + obs.obstaclePos.x &&
           bull.imageInstance.width / 7 + bull.posY > obs.obstaclePos.y
         ) {
-          obs.obstaclePos.x = -1
+          obs.obstaclePos.x = -1 - obs.obstacleSize.w
         } else {
           null
           // console.log("nothing happens")
