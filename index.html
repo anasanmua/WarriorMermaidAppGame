@@ -10,7 +10,22 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <div id="game-board" class="hidden">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div id="game-start">
+        <div class="container">
+            <div class="center">
+                <p>
+                    loading <span id="loading">0</span>%
+                </p>
+                <button id="play" class="hidden">
+                    <img src="./images/beluga.png" alt="start button"> </button>
+            </div>
+        </div>
+
+    </div>
 
     <script src="js/playLife.js"> </script>
     <script src="js/playScore.js"> </script>

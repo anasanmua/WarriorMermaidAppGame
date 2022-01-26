@@ -39,20 +39,10 @@ class PlayScore {
             80
         )
 
-        //SCORE
+
         this.ctx.fillStyle = 'white'
-        this.ctx.font = "bold 24px Courier"
-        this.ctx.fillText(this.scoreValue, (this.gameSize.w - 300), this.scorePos.y + 15)
-
-
-        this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(this.gameSize.w - 325, this.scorePos.y + 15, this.scoreSize.w / 2.5, this.scoreSize.h)
-
-        // this.ctx.fillStyle = 'white'
-        // this.ctx.fillRect((this.gameSize.w - 400) + 5, this.scorePos.y + 5, this.scoreSize.w / 2 - 10, this.scoreSize.h)
-
-
-
+        this.ctx.font = "bold 50px Courier"
+        this.ctx.fillText(this.scoreValue, (this.gameSize.w - 280), this.scorePos.y + 55)
 
 
     }

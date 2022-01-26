@@ -11,6 +11,7 @@ const warriorMermaidGameApp = {
   backgroundImage: undefined,
   player: undefined,
   score: undefined,
+  gameOverImageInstance: undefined,
   obstacles: [],
   lives: [],
   bullets: [],
@@ -58,6 +59,7 @@ const warriorMermaidGameApp = {
       } else {
         this.framesCounter++;
       }
+      this.createGameOver()
       this.clear();
       this.generateObstacles();
       this.generateLives();
@@ -65,9 +67,35 @@ const warriorMermaidGameApp = {
       this.checkObstacleCollision();
       this.checkLiveCollision();
       this.checkBulletCollision();
-      this.looseLive();
+      console.log(this.playLife.playLifeSize.w)
+      if (this.playLife.playLifeSize.w <= 0) {
+        this.gameOver()
+      };
 
     }, 1000 / this.FPS);
+  },
+
+  createGameOver() {
+    this.gameOverImageInstance = new Image();
+    this.gameOverImageInstance.src = "../images/gameOverC.png";
+
+  },
+
+  drawGameOver() {
+    this.ctx.drawImage(
+      this.gameOverImageInstance,
+      0,
+      0,
+      this.gameSize.w,
+      this.gameSize.h
+    );
+    this.ctx.fillText('holiwi', 100, 100, 100)
+  },
+
+  gameOver() {
+    clearInterval(this.interval)
+    this.drawGameOver();
+
   },
 
   reset() {
@@ -75,9 +103,12 @@ const warriorMermaidGameApp = {
     this.playScore = new PlayScore(this.ctx, this.gameSize);
     this.player = new Player(this.ctx, this.gameSize, this.keys);
     this.background = new Background(this.ctx, this.gameSize);
+
     this.obstacles = [];
     this.lives = [];
     this.bullets = [];
+
+
   },
 
   drawAll() {
@@ -89,7 +120,9 @@ const warriorMermaidGameApp = {
     this.lives.forEach((liv) => liv.draw());
     this.playScore.draw();
     this.playLife.draw();
+
   },
+
 
   //OBSTACLES
 
@@ -97,14 +130,13 @@ const warriorMermaidGameApp = {
     if (this.framesCounter % 200 === 0) {
       this.obstacles.push(
         new Obstacle(this.ctx, this.gameSize, 100, this.obstaclesImages)
-        // new Obstacle(this.ctx, this.gameSize, 100, this.obstaclesImages),
-        // new Obstacle(this.ctx, this.gameSize, 100, this.obstaclesImages)
+
       );
     }
   },
 
-  //LIVES
 
+  //LIVES
 
   generateLives() {
     if (this.framesCounter % 100 === 0) {
@@ -160,35 +192,29 @@ const warriorMermaidGameApp = {
 
   checkBulletCollision() {
     this.player.bullets.forEach((bull) => {
-      console.log(this.checkBulletCollision)
+
       this.obstacles.forEach((obs) => {
-        debugger
+
         if (
           bull.posX < obs.obstaclePos.x + obs.obstacleSize.w &&
-          bull.posX + bull.bulletSize.w > obs.obstaclePos.x &&
+          bull.posX + bull.imageInstance.width / 7 > obs.obstaclePos.x &&
           bull.posY < obs.obstaclePos.y + obs.obstaclePos.x &&
-          bull.bulletSize.w + bull.posY > obs.obstaclePos.y
+          bull.imageInstance.width / 7 + bull.posY > obs.obstaclePos.y
         ) {
-          console.log("bullet Impact")
+          obs.obstaclePos.x = -1
         } else {
-          console.log("nothing happens")
+          null
+          // console.log("nothing happens")
         }
       })
 
     })
   },
 
-  //LOOSING LIVE
-
-  looseLive() {
-    if (this.scoreValue > 0)
-      return console.log(+100)
-  },
-
-
-
+  //CLEAR
 
   clear() {
     this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h);
   },
+
 };

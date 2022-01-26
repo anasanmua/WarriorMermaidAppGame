@@ -167,8 +167,6 @@ class Player {
         this.posPlayerY,
         this.basePosition,
         this.playerSize,
-
-
       )
     );
   }

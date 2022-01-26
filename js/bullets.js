@@ -6,7 +6,7 @@ class Bullets {
     this.posY = posPlayerY + playerSize.h / 2;
     this.basePosition = basePosition;
     this.playerSize.h = playerSize.h;
-    // this.playScoreImage = "player.png"
+    this.playScoreImage = "bubbles.png"
     this.imageInstance = undefined
     // this.radius = 10;
     this.velX = 10;
@@ -19,15 +19,22 @@ class Bullets {
 
   }
 
-  // init() {
+  init() {
 
-  //   this.imageInstance = new Image();
-  //   this.imageInstance.src = `../images/${this.playScoreImage}`;
-  // }
+    this.imageInstance = new Image();
+    this.imageInstance.src = `../images/${this.playScoreImage}`;
+    this.imageInstance.frames = 7;
+    this.imageInstance.framesIndex = 0;
+  }
 
   draw() {
     this.ctx.drawImage(
-      this.imageUrl,
+      this.imageInstance,
+      this.imageInstance.framesIndex *
+      (this.imageInstance.width / this.imageInstance.frames),
+      0,
+      this.imageInstance.width / this.imageInstance.frames,
+      this.imageInstance.height,
       this.posX,
       this.posY,
       this.bulletSize.w,
