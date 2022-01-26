@@ -7,6 +7,10 @@ class Player {
     this.imageInstance = undefined;
     this.imageUrl = "./images/mermaid-sprite.png";
 
+    //ATTEMPT
+    // this.imageInstance2 = undefined;
+    // this.imageUrl2 = "./images/bubbles.png"
+
     this.keys = keys;
 
     this.posPlayerX = 50;
@@ -37,6 +41,9 @@ class Player {
   }
 
   init() {
+    //ATTEMPT
+    // this.imageInstance2 = new Image();
+    // this.imageInstance.src = this.imageUrl;
     this.imageInstance = new Image();
     this.imageInstance.src = this.imageUrl;
     this.imageInstance.frames = 10;
@@ -159,7 +166,9 @@ class Player {
         this.posPlayerX,
         this.posPlayerY,
         this.basePosition,
-        this.playerSize
+        this.playerSize,
+
+
       )
     );
   }

@@ -62,8 +62,9 @@ const warriorMermaidGameApp = {
       this.generateObstacles();
       this.generateLives();
       this.drawAll();
-      this.checkBulletCollision();
+      this.checkObstacleCollision();
       this.checkLiveCollision();
+      this.checkBulletCollision();
       this.looseLive();
 
     }, 1000 / this.FPS);
@@ -71,11 +72,12 @@ const warriorMermaidGameApp = {
 
   reset() {
     this.playLife = new Playlife(this.ctx, this.gameSize);
-    this.score = new PlayScore(this.ctx, this.gameSize);
+    this.playScore = new PlayScore(this.ctx, this.gameSize);
     this.player = new Player(this.ctx, this.gameSize, this.keys);
     this.background = new Background(this.ctx, this.gameSize);
     this.obstacles = [];
     this.lives = [];
+    this.bullets = [];
   },
 
   drawAll() {
@@ -85,7 +87,7 @@ const warriorMermaidGameApp = {
     this.player.draw(this.framesCounter);
     this.obstacles.forEach((obs) => obs.draw());
     this.lives.forEach((liv) => liv.draw());
-    this.score.draw();
+    this.playScore.draw();
     this.playLife.draw();
   },
 
@@ -114,16 +116,9 @@ const warriorMermaidGameApp = {
 
   //COLLISIONS
 
-  // checkCollision(obj) {
-  //   return (
-  //     this.posPlayerX < obj.obstaclePosX + obj.obstacleSize &&
-  //     this.posPlayerX + this.player.width > obj.obstaclePosX &&
-  //     this.posPlayerY < obj.obstaclePosY + obj.height &&
-  //     this.posPlayerY + this.playerSize.h > obj.obstaclePosY
-  //   );
-  // },
+  //1.OBSTACLES
 
-  checkBulletCollision() {
+  checkObstacleCollision() {
     this.obstacles.forEach((obs) => {
       if (
         this.player.posPlayerX < obs.obstaclePos.x + obs.obstacleSize.w &&
@@ -145,6 +140,8 @@ const warriorMermaidGameApp = {
 
   },
 
+  //2.LIVES
+
   checkLiveCollision() {
     this.lives.forEach((liv) => {
       if (this.player.posPlayerX < liv.livePos.x + liv.liveSize.w &&
@@ -153,10 +150,32 @@ const warriorMermaidGameApp = {
         this.player.playerSize.h + this.player.posPlayerY > liv.livePos.y
 
       ) {
-        console.log("live")
+        this.playScore.scoreValue += 5
       }
     })
 
+  },
+
+  //3.BULLETS 
+
+  checkBulletCollision() {
+    this.player.bullets.forEach((bull) => {
+      console.log(this.checkBulletCollision)
+      this.obstacles.forEach((obs) => {
+        debugger
+        if (
+          bull.posX < obs.obstaclePos.x + obs.obstacleSize.w &&
+          bull.posX + bull.bulletSize.w > obs.obstaclePos.x &&
+          bull.posY < obs.obstaclePos.y + obs.obstaclePos.x &&
+          bull.bulletSize.w + bull.posY > obs.obstaclePos.y
+        ) {
+          console.log("bullet Impact")
+        } else {
+          console.log("nothing happens")
+        }
+      })
+
+    })
   },
 
   //LOOSING LIVE

@@ -38,21 +38,4 @@ class Playlife {
 
     }
 
-    // decreaseHealth() {
-    //     if (this.warriorMermaidGameApp.checkBulletCollision())
-    //         this.playLifeSize.w -= (0.20 * this.playLifeSize)
-
-    // console.log(this.health)
-    // debugger
-    // if (this.health < 400) {
-    //     this.playLifeSize.w = 300
-    // } else {
-    //     this.playLifeSize.w = 50
-
-    // }
-
-    // }
-
-
-
 }
