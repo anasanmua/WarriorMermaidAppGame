@@ -2,10 +2,10 @@ class Player {
   constructor(ctx, gameSize, keys) {
     this.ctx = ctx;
     this.gameSize = gameSize;
-    this.playerSize = { w: 100, h: 100 };
+    this.playerSize = { w: 200, h: 200 };
 
     this.imageInstance = undefined;
-    this.imageUrl = "./images/player.png";
+    this.imageUrl = "./images/mermaid-sprite.png";
 
     this.keys = keys;
 
@@ -18,6 +18,9 @@ class Player {
     this.gravity = 0.2;
 
     this.keys = keys;
+
+    this.bullets = [];
+    this.canShoot = true;
 
     // ACTIONS
     this.actions = {
@@ -36,7 +39,7 @@ class Player {
   init() {
     this.imageInstance = new Image();
     this.imageInstance.src = this.imageUrl;
-    this.imageInstance.frames = 3;
+    this.imageInstance.frames = 10;
     this.imageInstance.framesIndex = 0;
   }
 
@@ -44,7 +47,7 @@ class Player {
     this.ctx.drawImage(
       this.imageInstance,
       this.imageInstance.framesIndex *
-        (this.imageInstance.width / this.imageInstance.frames),
+      (this.imageInstance.width / this.imageInstance.frames),
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,
@@ -56,6 +59,8 @@ class Player {
 
     this.animate(framesCounter);
     this.move();
+    this.bullets.forEach((bullet) => bullet.draw());
+    this.clearBullets();
   }
 
   animate(framesCounter) {
@@ -77,7 +82,7 @@ class Player {
     }
 
     // UP
-    if (this.posPlayerY > 10 && this.actions.up) {
+    if (this.posPlayerY > 150 && this.actions.up) {
       this.posPlayerY -= 10;
     }
     // RIGHT
@@ -115,9 +120,13 @@ class Player {
         case this.keys.DOWN:
           this.actions.down = true;
           break;
-        // case this.keys.SPACE:
-        //   // this.shoot();
-        //   break;
+        case this.keys.SPACE:
+          if (this.canShoot) {
+            this.shoot();
+            this.canShoot = false
+          }
+          break;
+
       }
     });
 
@@ -135,10 +144,26 @@ class Player {
         case this.keys.DOWN:
           this.actions.down = false;
           break;
-        // case this.keys.SPACE:
-        //   // this.shoot();
-        //   break;
+        case this.keys.SPACE:
+          this.canShoot = true
+
+          break;
+
       }
     });
+  }
+  shoot() {
+    this.bullets.push(
+      new Bullets(
+        this.ctx,
+        this.posPlayerX,
+        this.posPlayerY,
+        this.basePosition,
+        this.playerSize
+      )
+    );
+  }
+  clearBullets() {
+    this.bullets = this.bullets.filter((bull) => bull.posX > 0);
   }
 }

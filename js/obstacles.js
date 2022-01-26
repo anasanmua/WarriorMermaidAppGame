@@ -25,7 +25,7 @@ class Obstacle {
 
   randomLocation() {
     return Math.floor(
-      Math.random() * (this.gameSize.h - this.obstacleSize.h - 0)
+      Math.random() * (this.gameSize.h - this.obstacleSize.h) + 150
     );
   }
 

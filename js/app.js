@@ -10,6 +10,7 @@ const warriorMermaidGameApp = {
   framesCounter: 0,
   backgroundImage: undefined,
   player: undefined,
+  score: undefined,
   obstacles: [],
   lives: [],
   bullets: [],
@@ -31,6 +32,7 @@ const warriorMermaidGameApp = {
     this.setContext();
     this.setSize();
     this.start();
+
   },
 
   setContext() {
@@ -60,10 +62,16 @@ const warriorMermaidGameApp = {
       this.generateObstacles();
       this.generateLives();
       this.drawAll();
+      this.checkBulletCollision();
+      this.checkLiveCollision();
+      this.looseLive();
+
     }, 1000 / this.FPS);
   },
 
   reset() {
+    this.playLife = new Playlife(this.ctx, this.gameSize);
+    this.score = new PlayScore(this.ctx, this.gameSize);
     this.player = new Player(this.ctx, this.gameSize, this.keys);
     this.background = new Background(this.ctx, this.gameSize);
     this.obstacles = [];
@@ -71,11 +79,17 @@ const warriorMermaidGameApp = {
   },
 
   drawAll() {
+
+
     this.background.draw();
     this.player.draw(this.framesCounter);
     this.obstacles.forEach((obs) => obs.draw());
     this.lives.forEach((liv) => liv.draw());
+    this.score.draw();
+    this.playLife.draw();
   },
+
+  //OBSTACLES
 
   generateObstacles() {
     if (this.framesCounter % 200 === 0) {
@@ -87,6 +101,9 @@ const warriorMermaidGameApp = {
     }
   },
 
+  //LIVES
+
+
   generateLives() {
     if (this.framesCounter % 100 === 0) {
       this.lives.push(
@@ -94,6 +111,61 @@ const warriorMermaidGameApp = {
       );
     }
   },
+
+  //COLLISIONS
+
+  // checkCollision(obj) {
+  //   return (
+  //     this.posPlayerX < obj.obstaclePosX + obj.obstacleSize &&
+  //     this.posPlayerX + this.player.width > obj.obstaclePosX &&
+  //     this.posPlayerY < obj.obstaclePosY + obj.height &&
+  //     this.posPlayerY + this.playerSize.h > obj.obstaclePosY
+  //   );
+  // },
+
+  checkBulletCollision() {
+    this.obstacles.forEach((obs) => {
+      if (
+        this.player.posPlayerX < obs.obstaclePos.x + obs.obstacleSize.w &&
+        this.player.posPlayerX + this.player.playerSize.w > obs.obstaclePos.x &&
+        this.player.posPlayerY < obs.obstaclePos.y + obs.obstaclePos.x &&
+        this.player.playerSize.h + this.player.posPlayerY > obs.obstaclePos.y
+      ) {
+        if (this.playLife.playLifeSize.w > 0) {
+          this.playLife.playLifeSize.w -= 1
+        } else {
+          null
+        }
+      } else {
+        null
+
+      }
+
+    })
+
+  },
+
+  checkLiveCollision() {
+    this.lives.forEach((liv) => {
+      if (this.player.posPlayerX < liv.livePos.x + liv.liveSize.w &&
+        this.player.posPlayerX + this.player.playerSize.w > liv.livePos.x &&
+        this.player.posPlayerY < liv.livePos.y + liv.livePos.x &&
+        this.player.playerSize.h + this.player.posPlayerY > liv.livePos.y
+
+      ) {
+        console.log("live")
+      }
+    })
+
+  },
+
+  //LOOSING LIVE
+
+  looseLive() {
+    if (this.scoreValue > 0)
+      return console.log(+100)
+  },
+
 
 
 

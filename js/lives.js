@@ -24,9 +24,8 @@ class Live {
     }
 
     randomLocation() {
-        return Math.floor(
-            Math.random() * (this.gameSize.h - this.liveSize.h - 0)
-        );
+        return Math.floor(Math.random() * (150 + (this.gameSize.h - this.liveSize.h)) + (this.gameSize.h - this.liveSize.h))
+
     }
 
     randomImages() {

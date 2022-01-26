@@ -3,7 +3,7 @@ class Background {
     this.ctx = ctx;
     this.backgroundPos = { x: 0, y: 0 };
     this.backgroundSpeed = 1;
-    this.backgroundImage = "./images/bg.png";
+    this.backgroundImage = "./images/1_game_background.png";
     this.imageInstance = undefined;
     this.gameSize = gameSize;
 
