@@ -16,7 +16,6 @@ const warriorMermaidGameApp = {
   lives: [],
   bullets: [],
 
-
   keys: {
     UP: 38,
     DOWN: 40,
@@ -25,15 +24,31 @@ const warriorMermaidGameApp = {
     SPACE: 32,
   },
 
-  obstaclesImages: ["alga.png", "alga2.png", "alga3.png"],
+  obstaclesImages: [
+    "Bomb.png",
+    "Barrel_1.png",
+    "Barrel_2.png",
+    "Stone_3.png",
+    "Stone_4.png",
+    "Stone_5.png",
+    "Stone_6.png",
+    "Net.png",
+    "Anchor.png",
+  ],
 
-  livesImages: ["beluga.png", "whale.png", "whale2.png"],
+  livesImages: [
+    "Fish_move_1_000.png",
+    "Fish_move_2_000.png",
+    "Fish_move_3_000.png",
+    "Fish_move_4_000.png",
+    "Crab_move_1_000.png",
+    "Jellyfish_move_3_000.png",
+  ],
 
   init() {
     this.setContext();
     this.setSize();
     this.start();
-
   },
 
   setContext() {
@@ -59,7 +74,7 @@ const warriorMermaidGameApp = {
       } else {
         this.framesCounter++;
       }
-      this.createGameOver()
+      this.createGameOver();
       this.clear();
       this.generateObstacles();
       this.generateLives();
@@ -67,11 +82,10 @@ const warriorMermaidGameApp = {
       this.checkObstacleCollision();
       this.checkLiveCollision();
       this.checkBulletCollision();
-      console.log(this.playLife.playLifeSize.w)
+      console.log(this.playLife.playLifeSize.w);
       if (this.playLife.playLifeSize.w <= 0) {
-        this.gameOver()
-      };
-
+        this.gameOver();
+      }
     }, 1000 / this.FPS);
   },
 
@@ -79,23 +93,31 @@ const warriorMermaidGameApp = {
     this.gameOverImageInstance = new Image();
     this.gameOverImageInstance.src = "../images/gameOverC.png";
 
+    this.gameOverImageText = new Image();
+    this.gameOverImageText.src = "../images/gameOverText.png";
   },
 
   drawGameOver() {
     this.ctx.drawImage(
       this.gameOverImageInstance,
-      0,
-      0,
-      this.gameSize.w,
-      this.gameSize.h
+      100,
+      50,
+      this.gameSize.w * 0.8,
+      this.gameSize.h * 0.8
     );
-    this.ctx.fillText('holiwi', 100, 100, 100)
+
+    this.ctx.drawImage(
+      this.gameOverImageText,
+      360,
+      170,
+      this.gameSize.w / 2,
+      this.gameSize.h / 2
+    );
   },
 
   gameOver() {
-    clearInterval(this.interval)
+    clearInterval(this.interval);
     this.drawGameOver();
-
   },
 
   reset() {
@@ -107,22 +129,16 @@ const warriorMermaidGameApp = {
     this.obstacles = [];
     this.lives = [];
     this.bullets = [];
-
-
   },
 
   drawAll() {
-
-
     this.background.draw();
     this.player.draw(this.framesCounter);
     this.obstacles.forEach((obs) => obs.draw());
-    this.lives.forEach((liv) => liv.draw());
+    this.lives.forEach((liv) => liv.draw(this.framesCounter));
     this.playScore.draw();
     this.playLife.draw();
-
   },
-
 
   //OBSTACLES
 
@@ -130,19 +146,15 @@ const warriorMermaidGameApp = {
     if (this.framesCounter % 200 === 0) {
       this.obstacles.push(
         new Obstacle(this.ctx, this.gameSize, 100, this.obstaclesImages)
-
       );
     }
   },
-
 
   //LIVES
 
   generateLives() {
     if (this.framesCounter % 100 === 0) {
-      this.lives.push(
-        new Live(this.ctx, this.gameSize, 100, this.livesImages)
-      );
+      this.lives.push(new Live(this.ctx, this.gameSize, 100, this.livesImages));
     }
   },
 
@@ -159,56 +171,49 @@ const warriorMermaidGameApp = {
         this.player.playerSize.h + this.player.posPlayerY > obs.obstaclePos.y
       ) {
         if (this.playLife.playLifeSize.w > 0) {
-          this.playLife.playLifeSize.w -= 1
+          this.playLife.playLifeSize.w -= 1;
         } else {
-          null
+          null;
         }
       } else {
-        null
-
+        null;
       }
-
-    })
-
+    });
   },
 
   //2.LIVES
 
   checkLiveCollision() {
     this.lives.forEach((liv) => {
-      if (this.player.posPlayerX < liv.livePos.x + liv.liveSize.w &&
+      if (
+        this.player.posPlayerX < liv.livePos.x + liv.liveSize.w &&
         this.player.posPlayerX + this.player.playerSize.w > liv.livePos.x &&
         this.player.posPlayerY < liv.livePos.y + liv.livePos.x &&
         this.player.playerSize.h + this.player.posPlayerY > liv.livePos.y
-
       ) {
-        this.playScore.scoreValue += 5
+        this.playScore.scoreValue += 5;
       }
-    })
-
+    });
   },
 
-  //3.BULLETS 
+  //3.BULLETS
 
   checkBulletCollision() {
     this.player.bullets.forEach((bull) => {
-
       this.obstacles.forEach((obs) => {
-
         if (
           bull.posX < obs.obstaclePos.x + obs.obstacleSize.w &&
           bull.posX + bull.imageInstance.width / 7 > obs.obstaclePos.x &&
           bull.posY < obs.obstaclePos.y + obs.obstaclePos.x &&
           bull.imageInstance.width / 7 + bull.posY > obs.obstaclePos.y
         ) {
-          obs.obstaclePos.x = -1 - obs.obstacleSize.w
+          obs.obstaclePos.x = -1 - obs.obstacleSize.w;
         } else {
-          null
+          null;
           // console.log("nothing happens")
         }
-      })
-
-    })
+      });
+    });
   },
 
   //CLEAR
@@ -216,5 +221,4 @@ const warriorMermaidGameApp = {
   clear() {
     this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h);
   },
-
 };

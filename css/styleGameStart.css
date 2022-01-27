@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  width: 100%;
+
+  border-radius: 60px;
+  border: black;
+  border-style: dashed;
+
+  background-color: #bd628d;
+}
+
+body {
+  background-image: url(../images/gameStart.png);
+  background-repeat: no-repeat;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 50px 150px 0px 150px;
+}
+
+.container2 {
+  display: flex;
+}
+
+p {
+  font-size: 18px;
+  line-height: 2;
+  font-family: "Press Start 2P", cursive;
+  display: block;
+  padding: 50px 50px 10px 50px;
+  text-align: center;
+}
+
+.space-bar {
+  padding-bottom: 50px;
+  padding-top: 20px;
+}
+
+span {
+  color: #641a3d;
+}

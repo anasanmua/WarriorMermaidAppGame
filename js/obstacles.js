@@ -39,8 +39,8 @@ class Obstacle {
       this.imageInstance,
       this.obstaclePos.x,
       this.obstaclePos.y,
-      80,
-      80
+      100,
+      100
     );
     this.move();
   }
@@ -49,28 +49,3 @@ class Obstacle {
     this.obstaclePos.x -= this.obstacleSpeed;
   }
 }
-
-// class Obstacle {
-//   constructor(ctx, gameSize, imgSource) {
-//     this.ctx = ctx;
-//     this.gameSize = gameSize;
-//     this.imgSource = imgSource;
-
-//     this.ObstaclesSize = {
-//       h: 60,
-//       w: this.ObstaclesSize.h / 1.2,
-//     };
-
-//     this.ObstaclesPos = {
-//       x: this.gameSize.w,
-//       y: 20,
-//       //   y: this.randomLocation(),
-//     };
-
-//       randomLocation() {
-//     return Math.floor(
-//       Math.random() * (this.gameSize.h - this.ObstaclesSize.h + 10)
-//     );
-//   }
-//   }
-// }

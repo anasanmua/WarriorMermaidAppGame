@@ -2,15 +2,12 @@ class Player {
   constructor(ctx, gameSize, keys) {
     this.ctx = ctx;
     this.gameSize = gameSize;
-    this.playerSize = { w: 200, h: 200 };
+    this.playerSize = { w: 300, h: 200 };
 
     this.imageInstance = undefined;
     this.imageUrl = "./images/mermaid-sprite.png";
 
     //ATTEMPT
-    // this.imageInstance2 = undefined;
-    // this.imageUrl2 = "./images/bubbles.png"
-
     this.keys = keys;
 
     this.posPlayerX = 50;
@@ -42,8 +39,6 @@ class Player {
 
   init() {
     //ATTEMPT
-    // this.imageInstance2 = new Image();
-    // this.imageInstance.src = this.imageUrl;
     this.imageInstance = new Image();
     this.imageInstance.src = this.imageUrl;
     this.imageInstance.frames = 10;
@@ -54,7 +49,7 @@ class Player {
     this.ctx.drawImage(
       this.imageInstance,
       this.imageInstance.framesIndex *
-      (this.imageInstance.width / this.imageInstance.frames),
+        (this.imageInstance.width / this.imageInstance.frames),
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,
@@ -130,10 +125,9 @@ class Player {
         case this.keys.SPACE:
           if (this.canShoot) {
             this.shoot();
-            this.canShoot = false
+            this.canShoot = false;
           }
           break;
-
       }
     });
 
@@ -152,10 +146,9 @@ class Player {
           this.actions.down = false;
           break;
         case this.keys.SPACE:
-          this.canShoot = true
+          this.canShoot = true;
 
           break;
-
       }
     });
   }
@@ -166,10 +159,11 @@ class Player {
         this.posPlayerX,
         this.posPlayerY,
         this.basePosition,
-        this.playerSize,
+        this.playerSize
       )
     );
   }
+
   clearBullets() {
     this.bullets = this.bullets.filter((bull) => bull.posX > 0);
   }
