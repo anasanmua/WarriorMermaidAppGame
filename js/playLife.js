@@ -25,13 +25,13 @@ class Playlife {
   draw() {
     //LIFE
 
-    this.ctx.fillStyle = "#444";
-    this.ctx.fillRect(
-      this.playLifePos.x,
-      this.playLifePos.y,
-      410,
-      this.playLifeSize.h + 10
-    );
+    // this.ctx.fillStyle = "#444";
+    // this.ctx.fillRect(
+    //   this.playLifePos.x,
+    //   this.playLifePos.y,
+    //   410,
+    //   this.playLifeSize.h + 10
+    // );
 
     this.ctx.fillStyle = "#FF6464";
     this.ctx.fillRect(
