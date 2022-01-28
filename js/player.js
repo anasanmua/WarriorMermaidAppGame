@@ -2,10 +2,10 @@ class Player {
   constructor(ctx, gameSize, keys) {
     this.ctx = ctx;
     this.gameSize = gameSize;
-    this.playerSize = { w: 300, h: 200 };
+    this.playerSize = { w: 400, h: 230 };
 
     this.imageInstance = undefined;
-    this.imageUrl = "./images/mermaid-sprite.png";
+    this.imageUrl = "./images/mermaid_sprite.png";
 
     //ATTEMPT
     this.keys = keys;
@@ -30,6 +30,10 @@ class Player {
       down: false,
       left: false,
       right: false,
+    };
+
+    this.sounds = {
+      shoot: new Audio("./sounds/bubbles_sound.mp3"),
     };
 
     this.setListeners();
@@ -153,6 +157,8 @@ class Player {
     });
   }
   shoot() {
+    this.sounds.shoot.volume = 1;
+    this.sounds.shoot.play();
     this.bullets.push(
       new Bullets(
         this.ctx,

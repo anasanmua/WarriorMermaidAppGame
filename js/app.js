@@ -11,10 +11,13 @@ const warriorMermaidGameApp = {
   backgroundImage: undefined,
   player: undefined,
   score: undefined,
-  gameOverImageInstance: undefined,
+  // gameOverImageInstance: undefined,
   obstacles: [],
   lives: [],
   bullets: [],
+  sounds: {
+    theme: new Audio("./sounds/mermaid_sound.mp3"),
+  },
 
   keys: {
     UP: 38,
@@ -24,16 +27,17 @@ const warriorMermaidGameApp = {
     SPACE: 32,
   },
 
+  //creamos un array de objetos
   obstaclesImages: [
-    "Bomb.png",
-    "Barrel_1.png",
-    "Barrel_2.png",
-    "Stone_3.png",
-    "Stone_4.png",
-    "Stone_5.png",
-    "Stone_6.png",
-    "Net.png",
-    "Anchor.png",
+    { url: "Bomb.png", frames: 1, width: 100, height: 100 },
+    { url: "Barrel_1.png", frames: 1, width: 100, height: 100 },
+    { url: "Barrel_2.png", frames: 1, width: 100, height: 100 },
+    { url: "Jellyfish_1.png", frames: 10, width: 150, height: 100 },
+    { url: "Jellyfish_2.png", frames: 10, width: 150, height: 100 },
+    { url: "Net.png", frames: 1, width: 100, height: 100 },
+    { url: "Anchor.png", frames: 1, width: 100, height: 100 },
+    { url: "Shark.png", frames: 10, width: 250, height: 150 },
+    { url: "Shark2.png", frames: 10, width: 250, height: 150 },
   ],
 
   livesImages: [
@@ -41,8 +45,7 @@ const warriorMermaidGameApp = {
     "Fish_move_2_000.png",
     "Fish_move_3_000.png",
     "Fish_move_4_000.png",
-    "Crab_move_1_000.png",
-    "Jellyfish_move_3_000.png",
+    // "Crab_move_1_000.png",
   ],
 
   init() {
@@ -53,7 +56,6 @@ const warriorMermaidGameApp = {
 
   setContext() {
     this.ctx = document.querySelector("#canvas").getContext("2d");
-    console.log(this.ctx);
   },
 
   setSize() {
@@ -68,56 +70,64 @@ const warriorMermaidGameApp = {
   start() {
     this.reset();
 
+    this.sounds.theme.volume = 1;
+    this.sounds.theme.play();
     this.interval = setInterval(() => {
       if (this.framesCounter > 5000) {
         this.framesCounter = 0;
       } else {
         this.framesCounter++;
       }
-      this.createGameOver();
+      // this.createGameOver();
       this.clear();
       this.generateObstacles();
+      this.clearObstacles();
       this.generateLives();
+      this.clearLives();
       this.drawAll();
+
       this.checkObstacleCollision();
       this.checkLiveCollision();
       this.checkBulletCollision();
-      console.log(this.playLife.playLifeSize.w);
       if (this.playLife.playLifeSize.w <= 0) {
         this.gameOver();
       }
     }, 1000 / this.FPS);
   },
 
-  createGameOver() {
-    this.gameOverImageInstance = new Image();
-    this.gameOverImageInstance.src = "../images/gameOverC.png";
+  // createGameOver() {
+  //   this.gameOverImageInstance = new Image();
+  //   this.gameOverImageInstance.src = "../images/gameOverC.png";
 
-    this.gameOverImageText = new Image();
-    this.gameOverImageText.src = "../images/gameOverText.png";
-  },
+  //   this.gameOverImageText = new Image();
+  //   this.gameOverImageText.src = "../images/gameOverText.png";
+  // },
 
-  drawGameOver() {
-    this.ctx.drawImage(
-      this.gameOverImageInstance,
-      100,
-      50,
-      this.gameSize.w * 0.8,
-      this.gameSize.h * 0.8
-    );
+  // drawGameOver() {
+  //   this.ctx.drawImage(
+  //     this.gameOverImageInstance,
+  //     100,
+  //     50,
+  //     this.gameSize.w * 0.8,
+  //     this.gameSize.h * 0.8
+  //   );
 
-    this.ctx.drawImage(
-      this.gameOverImageText,
-      360,
-      170,
-      this.gameSize.w / 2,
-      this.gameSize.h / 2
-    );
-  },
+  //   this.ctx.drawImage(
+  //     this.gameOverImageText,
+  //     360,
+  //     170,
+  //     this.gameSize.w / 2,
+  //     this.gameSize.h / 2
+  //   );
+  // },
 
   gameOver() {
+    this.sounds.theme.pause();
+    document.querySelector(".game-board").style.display = "none";
+    document.querySelector(".game-over").style.display = "flex";
+    document.querySelector(".game-over span").innerHTML =
+      this.playScore.scoreValue;
     clearInterval(this.interval);
-    this.drawGameOver();
   },
 
   reset() {
@@ -134,7 +144,7 @@ const warriorMermaidGameApp = {
   drawAll() {
     this.background.draw();
     this.player.draw(this.framesCounter);
-    this.obstacles.forEach((obs) => obs.draw());
+    this.obstacles.forEach((obs) => obs.draw(this.framesCounter));
     this.lives.forEach((liv) => liv.draw(this.framesCounter));
     this.playScore.draw();
     this.playLife.draw();
@@ -150,12 +160,20 @@ const warriorMermaidGameApp = {
     }
   },
 
+  clearObstacles() {
+    this.obstacles = this.obstacles.filter((obs) => obs.obstaclePos.x >= 0);
+  },
+
   //LIVES
 
   generateLives() {
     if (this.framesCounter % 100 === 0) {
       this.lives.push(new Live(this.ctx, this.gameSize, 100, this.livesImages));
     }
+  },
+
+  clearLives() {
+    this.lives = this.lives.filter((liv) => liv.show == true);
   },
 
   //COLLISIONS
@@ -186,12 +204,14 @@ const warriorMermaidGameApp = {
   checkLiveCollision() {
     this.lives.forEach((liv) => {
       if (
-        this.player.posPlayerX < liv.livePos.x + liv.liveSize.w &&
-        this.player.posPlayerX + this.player.playerSize.w > liv.livePos.x &&
-        this.player.posPlayerY < liv.livePos.y + liv.livePos.x &&
-        this.player.playerSize.h + this.player.posPlayerY > liv.livePos.y
+        this.player.posPlayerX < liv.livePos.x + liv.liveSize.w * 0.2 &&
+        this.player.posPlayerX + this.player.playerSize.w * 0.8 >
+          liv.livePos.x &&
+        this.player.posPlayerY < liv.livePos.y + liv.liveSize.h &&
+        this.player.playerSize.h * 0.2 + this.player.posPlayerY > liv.livePos.y
       ) {
-        this.playScore.scoreValue += 5;
+        this.playScore.scoreValue += 1;
+        liv.show = false;
       }
     });
   },
@@ -204,13 +224,12 @@ const warriorMermaidGameApp = {
         if (
           bull.posX < obs.obstaclePos.x + obs.obstacleSize.w &&
           bull.posX + bull.imageInstance.width / 7 > obs.obstaclePos.x &&
-          bull.posY < obs.obstaclePos.y + obs.obstaclePos.x &&
+          bull.posY < obs.obstaclePos.y + obs.obstacleSize.h &&
           bull.imageInstance.width / 7 + bull.posY > obs.obstaclePos.y
         ) {
           obs.obstaclePos.x = -1 - obs.obstacleSize.w;
         } else {
           null;
-          // console.log("nothing happens")
         }
       });
     });

@@ -1,41 +1,39 @@
-class Live {
-  constructor(ctx, gameSize, liveSize, imgArr) {
+class Obstacle {
+  constructor(ctx, gameSize, obstacleSize, imgArr) {
     this.ctx = ctx;
     this.gameSize = gameSize;
-    this.liveSize = {
-      h: liveSize,
-      w: liveSize / 1.2,
+    this.obstacleSize = {
+      h: obstacleSize,
+      w: obstacleSize / 1.2,
     };
-
-    this.imageInstance = undefined;
     this.imgArr = imgArr;
-    this.livePos = {
-      x: this.gameSize.w - this.liveSize.w,
+    this.obstaclePos = {
+      x: this.gameSize.w - this.obstacleSize.w,
       y: this.randomLocation(),
     };
 
-    this.show = true;
-    this.liveSpeed = 4;
+    this.image = this.randomImage();
+    // this.image = { url: "Bomb.png", frames: 1, width: 100, height: 100 },
+
+    this.obstacleSpeed = 8;
 
     this.init();
   }
 
   init() {
     this.imageInstance = new Image();
-    const imgName = this.randomImages();
-    this.imageInstance.src = `../images/animals/${imgName}`;
-    this.imageInstance.frames = 10;
+    this.imageInstance.src = `../images/${this.image.url}`;
+    this.imageInstance.frames = this.image.frames;
     this.imageInstance.framesIndex = 0;
   }
 
   randomLocation() {
-    //  return Math.floor(Math.random() * (max - min + 1) + min)
     return Math.floor(
-      Math.random() * (this.gameSize.h - this.liveSize.h - 151) + 150
+      Math.random() * (this.gameSize.h - this.obstacleSize.h - 151) + 150
     );
   }
 
-  randomImages() {
+  randomImage() {
     let i = Math.floor(Math.random() * this.imgArr.length);
     return this.imgArr[i];
   }
@@ -48,10 +46,10 @@ class Live {
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,
-      this.livePos.x,
-      this.livePos.y,
-      this.liveSize.h,
-      this.liveSize.w
+      this.obstaclePos.x,
+      this.obstaclePos.y,
+      this.image.width,
+      this.image.height
     );
     this.animate(framesCounter);
     this.move();
@@ -66,7 +64,18 @@ class Live {
     }
   }
 
+  // draw() {
+  //   this.ctx.drawImage(
+  //     this.imageInstance,
+  //     this.obstaclePos.x,
+  //     this.obstaclePos.y,
+  //     100,
+  //     100
+  //   );
+  //   this.move();
+  // }
+
   move() {
-    this.livePos.x -= this.liveSpeed;
+    this.obstaclePos.x -= this.obstacleSpeed;
   }
 }

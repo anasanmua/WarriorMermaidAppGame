@@ -21,8 +21,8 @@ class PlayScore {
   }
 
   init() {
-    // this.imageInstance = new Image();
-    // this.imageInstance.src = `../images/chain_1.png`;
+    this.imageInstanceChain = new Image();
+    this.imageInstanceChain.src = `../images/chain_1.png`;
 
     this.imageInstance = new Image();
     this.imageInstance.src = `../images/dec_5.png`;
@@ -30,11 +30,11 @@ class PlayScore {
 
   draw() {
     this.ctx.drawImage(
-      this.imageInstance,
-      this.gameSize.w - 400 + 5,
-      this.scorePos.y + 5,
-      300,
-      80
+      this.imageInstanceChain,
+      this.gameSize.w - 400 + 50,
+      0,
+      200,
+      90
     );
 
     this.ctx.drawImage(

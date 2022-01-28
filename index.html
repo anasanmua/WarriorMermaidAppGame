@@ -6,27 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./src/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-    <div>
-        <div id="game-board" class="hidden">
-            <canvas id="canvas"></canvas>
+    <div class="game-board">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <section class="game-over">
+        <div class="game-over-container">
+            <img src="./images/gameOverText.png" alt="button start">
+            <p class="total-score"> Total Score: <span>0</span> Saved Lives</p>
+            <span class="link">
+                <a href="index.html" class="retry">Retry</a>
+            </span>
         </div>
+    </section>
 
-
-
-
-        <script src="js/playLife.js"> </script>
-        <script src="js/playScore.js"> </script>
-        <script src="js/bullets.js"> </script>
-        <script src="js/lives.js"> </script>
-        <script src="js/obstacles.js"> </script>
-        <script src="js/player.js"> </script>
-        <script src="js/background.js"> </script>
-        <script src="js/app.js"> </script>
-        <script src="js/script.js"> </script>
+    <script src="js/playLife.js"> </script>
+    <script src="js/playScore.js"> </script>
+    <script src="js/bullets.js"> </script>
+    <script src="js/lives.js"> </script>
+    <script src="js/obstacle.js"> </script>
+    <script src="js/player.js"> </script>
+    <script src="js/background.js"> </script>
+    <script src="js/sounds.js"></script>
+    <script src="js/app.js"> </script>
+    <script src="js/script.js"> </script>
 </body>
 
 </html>
