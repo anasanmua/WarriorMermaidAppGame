@@ -22,10 +22,10 @@ class PlayScore {
 
   init() {
     this.imageInstanceChain = new Image();
-    this.imageInstanceChain.src = `../images/chain_1.png`;
+    this.imageInstanceChain.src = `images/chain_1.png`;
 
     this.imageInstance = new Image();
-    this.imageInstance.src = `../images/dec_5.png`;
+    this.imageInstance.src = `images/dec_5.png`;
   }
 
   draw() {

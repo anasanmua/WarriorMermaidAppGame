@@ -95,31 +95,6 @@ const warriorMermaidGameApp = {
     }, 1000 / this.FPS);
   },
 
-  // createGameOver() {
-  //   this.gameOverImageInstance = new Image();
-  //   this.gameOverImageInstance.src = "../images/gameOverC.png";
-
-  //   this.gameOverImageText = new Image();
-  //   this.gameOverImageText.src = "../images/gameOverText.png";
-  // },
-
-  // drawGameOver() {
-  //   this.ctx.drawImage(
-  //     this.gameOverImageInstance,
-  //     100,
-  //     50,
-  //     this.gameSize.w * 0.8,
-  //     this.gameSize.h * 0.8
-  //   );
-
-  //   this.ctx.drawImage(
-  //     this.gameOverImageText,
-  //     360,
-  //     170,
-  //     this.gameSize.w / 2,
-  //     this.gameSize.h / 2
-  //   );
-  // },
 
   gameOver() {
     this.sounds.theme.pause();
@@ -206,7 +181,7 @@ const warriorMermaidGameApp = {
       if (
         this.player.posPlayerX < liv.livePos.x + liv.liveSize.w * 0.2 &&
         this.player.posPlayerX + this.player.playerSize.w * 0.8 >
-          liv.livePos.x &&
+        liv.livePos.x &&
         this.player.posPlayerY < liv.livePos.y + liv.liveSize.h &&
         this.player.playerSize.h * 0.2 + this.player.posPlayerY > liv.livePos.y
       ) {

@@ -23,7 +23,7 @@ class Live {
   init() {
     this.imageInstance = new Image();
     const imgName = this.randomImages();
-    this.imageInstance.src = `../images/animals/${imgName}`;
+    this.imageInstance.src = `images/animals/${imgName}`;
     this.imageInstance.frames = 10;
     this.imageInstance.framesIndex = 0;
   }
@@ -44,7 +44,7 @@ class Live {
     this.ctx.drawImage(
       this.imageInstance,
       this.imageInstance.framesIndex *
-        (this.imageInstance.width / this.imageInstance.frames),
+      (this.imageInstance.width / this.imageInstance.frames),
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,

@@ -5,7 +5,7 @@ class Player {
     this.playerSize = { w: 400, h: 230 };
 
     this.imageInstance = undefined;
-    this.imageUrl = "./images/mermaid_sprite.png";
+    this.imageUrl = "images/mermaid_sprite.png";
 
     //ATTEMPT
     this.keys = keys;
@@ -53,7 +53,7 @@ class Player {
     this.ctx.drawImage(
       this.imageInstance,
       this.imageInstance.framesIndex *
-        (this.imageInstance.width / this.imageInstance.frames),
+      (this.imageInstance.width / this.imageInstance.frames),
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,

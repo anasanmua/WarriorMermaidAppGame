@@ -12,7 +12,7 @@ class Background {
 
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = this.backgroundImage;
+    this.imageInstance = this.backgroundImage;
   }
 
   draw() {

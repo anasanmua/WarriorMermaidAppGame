@@ -18,7 +18,7 @@ class Bullets {
 
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = `../images/${this.playScoreImage}`;
+    this.imageInstance.src = `images/${this.playScoreImage}`;
     this.imageInstance.frames = 7;
     this.imageInstance.framesIndex = 0;
   }
@@ -27,7 +27,7 @@ class Bullets {
     this.ctx.drawImage(
       this.imageInstance,
       this.imageInstance.framesIndex *
-        (this.imageInstance.width / this.imageInstance.frames),
+      (this.imageInstance.width / this.imageInstance.frames),
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,

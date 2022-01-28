@@ -22,7 +22,7 @@ class Obstacle {
 
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = `../images/${this.image.url}`;
+    this.imageInstance.src = `images/${this.image.url}`;
     this.imageInstance.frames = this.image.frames;
     this.imageInstance.framesIndex = 0;
   }
@@ -42,7 +42,7 @@ class Obstacle {
     this.ctx.drawImage(
       this.imageInstance,
       this.imageInstance.framesIndex *
-        (this.imageInstance.width / this.imageInstance.frames),
+      (this.imageInstance.width / this.imageInstance.frames),
       0,
       this.imageInstance.width / this.imageInstance.frames,
       this.imageInstance.height,
